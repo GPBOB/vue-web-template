@@ -1,15 +1,15 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
+import Vue from "vue";
+import Vuex from "vuex";
+import user from "./modules/user";
 
-Vue.use(Vuex)
+Vue.use(Vuex);
 
+let storeFile = require.context("./modules", false, /\.js$/);
+let storeModule = {};
+storeFile.keys().forEach(key => {
+  let fileName = key.slice(2, -3);
+  storeModule[fileName] = { ...storeFile(key).default };
+});
 export default new Vuex.Store({
-  state: {
-  },
-  mutations: {
-  },
-  actions: {
-  },
-  modules: {
-  }
-})
+  modules: storeModule
+});
